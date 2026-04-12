@@ -48,18 +48,18 @@ pub fn handler(ctx: Context<Claim>) -> Result<()> {
         EscrowError::NotRecipient
     );
 
-    // 3. Milestones + time OR arbiter approval
+    // 3. (Milestones done OR arbiter waiver) AND time-lock must always pass.
     let clock = Clock::get()?;
     let milestones_done = escrow.milestones_completed >= escrow.milestones_required;
     let time_passed = clock.unix_timestamp >= escrow.unlock_timestamp;
     let early_approved = escrow.arbiter_approved;
 
     require!(
-        (milestones_done && time_passed) || early_approved,
-        if !milestones_done {
-            EscrowError::MilestonesNotComplete
-        } else {
+        (milestones_done || early_approved) && time_passed,
+        if !time_passed {
             EscrowError::UnlockTimeNotReached
+        } else {
+            EscrowError::MilestonesNotComplete
         }
     );
 

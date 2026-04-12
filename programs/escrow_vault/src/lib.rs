@@ -26,15 +26,15 @@ pub mod escrow_vault {
         instructions::complete_milestone::handler(ctx)
     }
 
-    // pub fn claim(ctx: Context<Claim>) -> Result<()> {
-    //     instructions::claim::handler(ctx)
-    // }
+    pub fn claim(ctx: Context<Claim>) -> Result<()> {
+        instructions::claim::handler(ctx)
+    }
 
     pub fn arbiter_approve(ctx: Context<ArbiterApprove>) -> Result<()> {
         instructions::arbiter_approve::handler(ctx)
     }
 
-    // pub fn cancel(ctx: Context<Cancel>) -> Result<()> {
-    //     instructions::cancel::handler(ctx)
-    // }
+    pub fn cancel(ctx: Context<Cancel>) -> Result<()> {
+        instructions::cancel::handler(ctx)
+    }
 }
